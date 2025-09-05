@@ -1,0 +1,535 @@
+/* 1. Setup and CSS Variables for Theming */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap");
+
+:root {
+  --bg-gradient: linear-gradient(120deg, #0f2027, #203a43, #2c5364);
+  --text-color: #f1f1f1;
+  --heading-color: #ffffff;
+  --card-bg: rgba(20, 30, 48, 0.7);
+  --sidebar-bg: #111827;
+  --accent-color: #00acee;
+  --accent-hover: #0077b5;
+  --icon-color: #a5b4fc;
+  --icon-hover-bg: #312e81;
+}
+
+body.light-mode {
+  --bg-gradient: #f4f4f8;
+  --text-color: #333;
+  --heading-color: #111;
+  --card-bg: #ffffff;
+  --sidebar-bg: #ffffff;
+  --accent-color: #0077b5;
+  --accent-hover: #005a8d;
+  --icon-color: #4f46e5;
+  --icon-hover-bg: #e0e7ff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg-gradient);
+  color: var(--text-color);
+  transition: background 0.4s ease, color 0.4s ease;
+}
+
+/* 2. New Collapsible Sidebar */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 80px; /* Collapsed width */
+  background: var(--sidebar-bg);
+  padding: 15px 0;
+  transition: width 0.3s ease;
+  z-index: 1000;
+  overflow: hidden;
+  box-shadow: 5px 0px 15px rgba(0, 0, 0, 0.2);
+}
+
+.sidebar:hover {
+  width: 280px; /* Expanded width */
+}
+
+.sidebar .logo {
+  text-align: center;
+  font-size: 28px;
+  font-weight: bold;
+  color: var(--accent-color);
+  text-decoration: none;
+  margin-bottom: 30px;
+  display: block;
+  line-height: 50px;
+}
+
+.sidebar-menu li a {
+  display: flex;
+  align-items: center;
+  color: var(--icon-color);
+  text-decoration: none;
+  padding: 15px 25px;
+  white-space: nowrap; /* Prevents text wrap */
+  transition: background 0.2s, color 0.2s;
+}
+
+.sidebar-menu li a:hover {
+  background: var(--icon-hover-bg);
+  color: var(--heading-color);
+}
+
+.sidebar-menu i {
+  font-size: 22px;
+  margin-right: 20px;
+  width: 30px;
+  text-align: center;
+}
+
+/* 3. Main Content Area */
+.main-content {
+  margin-left: 80px; /* Match collapsed sidebar width */
+  padding: 40px;
+  transition: margin-left 0.3s ease;
+}
+
+body.sidebar-expanded .main-content {
+  margin-left: 280px; /* Match expanded sidebar width */
+}
+
+/* 4. Section and Card Styling */
+.section {
+  padding: 60px 0;
+  text-align: center;
+}
+
+h2 {
+  font-size: 36px;
+  margin-bottom: 40px;
+  color: var(--heading-color);
+}
+
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+}
+
+.card {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: left;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  transition: transform 0.3s, box-shadow 0.3s, opacity 0.5s ease;
+}
+
+.card.hidden {
+  opacity: 0;
+  transform: scale(0.9);
+  pointer-events: none;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.3);
+}
+
+.card img {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.card h3 {
+  color: var(--heading-color);
+}
+.card p {
+  margin-bottom: 15px;
+}
+
+.card a {
+  display: inline-block;
+  padding: 10px 18px;
+  background: var(--accent-color);
+  color: white;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.card a:hover {
+  background: var(--accent-hover);
+}
+
+/* 5. Filtering and Social Links */
+.filters {
+  margin-bottom: 30px;
+}
+
+.filter-btn {
+  background: transparent;
+  border: 1px solid var(--accent-color);
+  color: var(--accent-color);
+  padding: 8px 16px;
+  margin: 5px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+  background: var(--accent-color);
+  color: white;
+}
+
+.social-links a {
+  margin: 0 15px;
+  font-size: 30px;
+  color: var(--text-color);
+  transition: transform 0.3s, color 0.3s;
+}
+
+.social-links a:hover {
+  transform: scale(1.2);
+  color: var(--accent-color);
+}
+
+/* 6. Theme Toggle */
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 30px;
+  background: var(--card-bg);
+  color: var(--text-color);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  z-index: 1200;
+  font-size: 16px;
+}
+/* Add this to your style.css file */
+
+.sidebar .menu-text {
+  /* Hide the text by default */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.sidebar:hover .menu-text {
+  /* Show the text on hover */
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0.1s; /* Small delay so it appears after the sidebar expands */
+}
+/* Contact Section Styling */
+.contact-card {
+  background: var(--card-bg); /* Use your existing card background variable */
+  border-radius: 12px;
+  padding: 40px 30px;
+  margin: 0 auto; /* Center the card */
+  max-width: 500px; /* Limit its width */
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.3);
+}
+
+.contact-icon {
+  font-size: 60px;
+  color: var(--accent-color);
+  margin-bottom: 20px;
+  display: block;
+}
+
+.contact-email {
+  font-size: 1.1em;
+  margin-bottom: 25px;
+}
+
+.contact-email a {
+  color: var(--accent-color); /* Matches your project link color */
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s;
+}
+
+.contact-email a:hover {
+  color: var(--accent-hover);
+  text-decoration: underline;
+}
+
+.btn-send-email {
+  display: inline-block;
+  background: var(--accent-color);
+  color: white;
+  padding: 12px 25px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 1.1em;
+  font-weight: 600;
+  margin-top: 15px;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btn-send-email:hover {
+  background: var(--accent-hover);
+  transform: translateY(-2px);
+}
+
+.contact-social-links {
+  margin-top: 30px;
+}
+
+.contact-social-links a {
+  margin: 0 10px;
+  font-size: 28px;
+  color: var(--text-color);
+  transition: color 0.3s, transform 0.3s;
+}
+
+.contact-social-links a:hover {
+  color: var(--accent-color);
+  transform: scale(1.1);
+}
+
+/* Adjustments for light mode */
+body.light-mode .contact-card {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+/* ========================================= */
+/* MOBILE RESPONSIVE STYLES             */
+/* ========================================= */
+@media (max-width: 768px) {
+  /* 1. Shrink the sidebar and adjust main content margin */
+  /* 1. Implement a proper slide-in menu for mobile */
+  .sidebar {
+    width: 280px; /* Full width when it slides in */
+    left: 0;
+    /* Move the sidebar completely off-screen */
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .sidebar.is-open {
+    transform: translateX(0); /* Slide it into view */
+  }
+
+  /* On mobile, content should take up the full width */
+  .main-content,
+  body.sidebar-expanded .main-content {
+    margin-left: 0;
+    /* Add space at the top for the fixed mobile header */
+    padding-top: 60px;
+  }
+
+  /* Hover doesn't work on mobile, so we prevent the huge margin shift */
+  body.sidebar-expanded .main-content {
+    margin-left: 65px;
+  }
+
+  /* 2. Adjust typography for smaller screens */
+  h2 {
+    font-size: 28px; /* Make main headings smaller */
+  }
+
+  .card h3 {
+    font-size: 18px;
+  }
+
+  /* 3. Adjust spacing for sections */
+  .section {
+    padding: 40px 0; /* Reduce top/bottom padding */
+  }
+
+  /* 4. Make the theme toggle button easier to reach */
+  .theme-toggle {
+    bottom: 15px;
+    right: 15px;
+  }
+
+  /* 5. Adjust the contact card padding */
+  .contact-card {
+    padding: 30px 20px;
+  }
+}
+/* Mobile Header Styles */
+.mobile-header {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: var(--sidebar-bg);
+  padding: 10px 20px;
+  z-index: 1001;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.mobile-logo {
+  color: var(--accent-color);
+  font-size: 24px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.mobile-header-buttons {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.mobile-menu-toggle {
+  background: none;
+  border: none;
+  color: var(--text-color);
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Logic to show/hide the correct theme icon */
+.theme-toggle .icon-light {
+  display: none;
+}
+.theme-toggle .icon-dark {
+  display: block;
+}
+
+body.light-mode .theme-toggle .icon-light {
+  display: block;
+}
+body.light-mode .theme-toggle .icon-dark {
+  display: none;
+}
+
+/* Styles applied only on mobile screens */
+@media (max-width: 768px) {
+  /* Show the mobile header */
+  .mobile-header {
+    display: flex;
+  }
+
+  /* Style the theme toggle button for the header */
+  .theme-toggle {
+    position: static; /* Remove the old fixed positioning */
+    background: transparent;
+    border: none;
+    color: var(--text-color);
+    font-size: 22px;
+    padding: 5px;
+    cursor: pointer;
+  }
+}
+.main-content {
+  margin-left: 80px;
+
+  padding: 40px;
+  transition: margin-left 0.3s ease;
+}
+.mobile-header {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-header {
+    display: flex;
+  }
+  .sidebar {
+    width: 0;
+    overflow: hidden;
+  }
+  .main-content {
+    margin-left: 0;
+  }
+}
+#hero {
+  min-height: 80vh; /* Make the section tall */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center content vertically */
+  align-items: center; /* Center content horizontally */
+  text-align: center;
+  padding-bottom: 60px; /* Add some space at the bottom */
+}
+
+.hero-content {
+  max-width: 800px; /* Limit the width of the text */
+}
+
+.hero-title {
+  font-size: 4rem; /* Big, bold title */
+  font-weight: 700;
+  color: var(--heading-color);
+  margin-bottom: 1rem;
+}
+
+.hero-subtitle {
+  font-size: 1.5rem;
+  color: var(--text-color);
+  margin-bottom: 2.5rem;
+  line-height: 1.6;
+}
+
+.hero-cta-button {
+  display: inline-block;
+  background: var(--accent-color);
+  color: white;
+  padding: 15px 35px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 1.1em;
+  font-weight: 600;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.hero-cta-button:hover {
+  background: var(--accent-hover);
+  transform: translateY(-3px);
+}
+
+/* Make it responsive for mobile */
+@media (max-width: 768px) {
+  #hero {
+    min-height: 60vh;
+  }
+  .hero-title {
+    font-size: 2.5rem;
+  }
+  .hero-subtitle {
+    font-size: 1.2rem;
+  }
+}
+/* Media Query for Hero Section on Mobile */
+@media (max-width: 768px) {
+  #hero {
+    min-height: 60vh;
+  }
+  .hero-title {
+    font-size: 2.5rem;
+  }
+  .hero-subtitle {
+    font-size: 1.2rem;
+  }
+}
