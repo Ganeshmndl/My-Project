@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Project Portfolio</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="mobile-header">
+      <a href="#" class="mobile-logo">MP</a>
+
+      <div class="mobile-header-buttons">
+        <button class="theme-toggle">
+          <i class="fa-solid fa-moon icon-dark"></i>
+          <i class="fa-solid fa-sun icon-light"></i>
+        </button>
+        <button class="mobile-menu-toggle" id="mobileMenuToggle">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </div>
+    <nav class="sidebar">
+      <a href="#" class="logo">MP</a>
+      <ul class="sidebar-menu">
+        <li>
+          <a href="#clone-projects"
+            ><i class="fa-solid fa-copy"></i>
+            <span class="menu-text">Clone Projects</span></a
+          >
+        </li>
+        <li>
+          <a href="#game-projects"
+            ><i class="fa-solid fa-gamepad"></i>
+            <span class="menu-text">Game Projects</span></a
+          >
+        </li>
+        <li>
+          <a href="#social-media"
+            ><i class="fa-solid fa-user"></i>
+            <span class="menu-text">Social Media</span></a
+          >
+        </li>
+        <li>
+          <a href="#youtube"
+            ><i class="fa-brands fa-youtube"></i>
+            <span class="menu-text">YouTube</span></a
+          >
+        </li>
+        <li>
+          <a href="#contact"
+            ><i class="fa-solid fa-envelope"></i>
+            <span class="menu-text">Contact</span></a
+          >
+        </li>
+      </ul>
+    </nav>
+
+    <main class="main-content">
+      <section id="hero" class="section">
+        <div class="hero-content">
+          <h1 class="hero-title" data-aos="fade-down">Hi, I'm Ganesh Mandal</h1>
+          <p class="hero-subtitle" data-aos="fade-down" data-aos-delay="200">
+            A Frontend Developer Passionate About Building Interactive Web
+            Experiences.
+          </p>
+          <a
+            href="#clone-projects"
+            class="hero-cta-button"
+            data-aos="fade-up"
+            data-aos-delay="400"
+          >
+            View My Work
+          </a>
+        </div>
+      </section>
+      <section id="clone-projects" class="section">
+        <h2>Clone Projects</h2>
+        <p class="project-disclaimer">
+          <i class="fa-solid fa-circle-info"></i> These are demo clone projects
+          made with HTML, CSS, and JS for learning purposes only.
+        </p>
+        <div class="card-container">
+          <div class="card clone">
+            <img src="assets/project1.jpg" alt="Shopping Site Clone" />
+            <h3>Shopping Site Clone</h3>
+            <p>Shopping site UI clone with HTML, CSS, JS.</p>
+            <a href="#">View Project</a>
+          </div>
+          <div class="card clone">
+            <img src="assets/project2.jpg" alt="Music Player Clone" />
+            <h3>Music Player Clone</h3>
+            <p>Music player web app clone with HTML, CSS, JS.</p>
+            <a href="#">View Project</a>
+          </div>
+        </div>
+      </section>
+
+      <section id="game-projects" class="section">
+        <h2>Game Projects</h2>
+        <div class="filters">
+          <button class="filter-btn active" data-category="all">All</button>
+          <button class="filter-btn" data-category="snake">Snake</button>
+          <button class="filter-btn" data-category="tic-tac-toe">
+            Tic Tac Toe
+          </button>
+        </div>
+        <div class="card-container">
+          <div class="card snake">
+            <img src="assets/game1.jpg" alt="Snake Game" />
+            <h3>Snake Game</h3>
+            <p>Classic snake game in JavaScript.</p>
+            <a href="https://ganeshmndl.github.io/Bird-Game-Project/"
+              >Play Now</a
+            >
+          </div>
+          <div class="card tic-tac-toe">
+            <img src="assets/game2.jpg" alt="Tic Tac Toe" />
+            <h3>Tic Tac Toe</h3>
+            <p>Multiplayer Tic Tac Toe with HTML, CSS, JavaScript.</p>
+            <a href="https://ganeshmndl.github.io/Tic-tac-toe/">Play Now</a>
+          </div>
+        </div>
+      </section>
+
+      <section id="social-media" class="section">
+        <h2>Follow Me</h2>
+        <div class="social-links">
+          <a href="https://www.facebook.com/ramganesh.mandal.39/"
+            ><i class="fa-brands fa-facebook"></i
+          ></a>
+          <a href="#"><i class="fa-brands fa-twitter"></i></a>
+          <a href="https://www.instagram.com/mndlgnes/"
+            ><i class="fa-brands fa-instagram"></i
+          ></a>
+          <a href="https://github.com/Ganeshmndl"
+            ><i class="fa-brands fa-github"></i
+          ></a>
+        </div>
+      </section>
+
+      <!-- <section id="youtube" class="section">
+        <h2>YouTube</h2>
+        <p>Check out my latest videos:</p>
+        <div class="youtube-videos">
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/@GameBitsUniverse-x9z"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </section> -->
+
+      <section id="contact" class="section">
+        <h2>Contact Me</h2>
+        <div class="contact-card">
+          <i class="fa-solid fa-envelope contact-icon"></i>
+          <p class="contact-email">
+            Email:
+            <a href="mailto:ganeshmndl168@gmail.com">ganeshmndl168@gmail.com</a>
+          </p>
+          <a href="mailto:ganeshmndl168@gmail.com" class="btn-send-email"
+            >Send Email</a
+          >
+          <div class="contact-social-links">
+            <a href="https://github.com/yourusername" target="_blank"
+              ><i class="fa-brands fa-github"></i
+            ></a>
+            <a href="https://linkedin.com/in/yourusername" target="_blank"
+              ><i class="fa-brands fa-linkedin"></i
+            ></a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
