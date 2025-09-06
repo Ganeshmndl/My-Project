@@ -1,25 +1,32 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // --- 1. THEME SWITCHER ---
-  const themeToggle = document.querySelector(".theme-toggle");
+  // --- 1. THEME SWITCHER LOGIC ---
+  const themeToggles = document.querySelectorAll(".theme-toggle");
   const body = document.body;
 
-  // Apply saved theme on page load
-  const savedTheme = localStorage.getItem("theme");
-  if (savedTheme === "light") {
-    body.classList.add("light-mode");
+  function applyTheme() {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "light") {
+      body.classList.add("light-mode");
+    } else {
+      body.classList.remove("light-mode");
+    }
   }
 
-  themeToggle.addEventListener("click", () => {
-    body.classList.toggle("light-mode");
-    // Save the user's preference
-    if (body.classList.contains("light-mode")) {
-      localStorage.setItem("theme", "light");
-    } else {
-      localStorage.removeItem("theme");
-    }
+  themeToggles.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      body.classList.toggle("light-mode");
+      if (body.classList.contains("light-mode")) {
+        localStorage.setItem("theme", "light");
+      } else {
+        localStorage.removeItem("theme");
+      }
+    });
   });
 
-  // --- 2. SIDEBAR CONTENT PUSH ---
+  // Apply theme as soon as the page loads
+  applyTheme();
+
+  // --- 2. DESKTOP SIDEBAR HOVER EFFECT ---
   const sidebar = document.querySelector(".sidebar");
   sidebar.addEventListener("mouseenter", () =>
     body.classList.add("sidebar-expanded")
@@ -28,31 +35,41 @@ document.addEventListener("DOMContentLoaded", () => {
     body.classList.remove("sidebar-expanded")
   );
 
-  // --- 3. ANIMATED PROJECT FILTERING ---
-  const filterButtons = document.querySelectorAll(".filter-btn");
-  const projects = document.querySelectorAll(".card-container .card");
+  // --- 3. MOBILE MENU TOGGLE ---
+  const mobileMenuToggle = document.getElementById("mobileMenuToggle");
+  if (mobileMenuToggle) {
+    mobileMenuToggle.addEventListener("click", () => {
+      sidebar.classList.toggle("is-open");
+    });
+  }
 
-  filterButtons.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      // Set active class on button
-      filterButtons.forEach((b) => b.classList.remove("active"));
-      btn.classList.add("active");
-
-      const category = btn.getAttribute("data-category");
-
-      projects.forEach((proj) => {
-        const matchesCategory =
-          category === "all" || proj.classList.contains(category);
-
-        if (matchesCategory) {
-          proj.classList.remove("hidden");
-        } else {
-          proj.classList.add("hidden");
-        }
-      });
+  // Close mobile menu when a link is clicked
+  document.querySelectorAll(".sidebar-menu a").forEach((link) => {
+    link.addEventListener("click", () => {
+      sidebar.classList.remove("is-open");
     });
   });
 
-  // Note: The smooth scroll is now handled by the CSS `html { scroll-behavior: smooth; }`
-  // which is simpler for this use case.
+  // --- 4. PROJECT FILTERING ---
+  const filterButtons = document.querySelectorAll(".filter-btn");
+  const projects = document.querySelectorAll(".card-container .card");
+
+  if (filterButtons.length > 0) {
+    filterButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        filterButtons.forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        const category = btn.getAttribute("data-category");
+        projects.forEach((proj) => {
+          const matchesCategory =
+            category === "all" || proj.classList.contains(category);
+          if (matchesCategory) {
+            proj.classList.remove("hidden");
+          } else {
+            proj.classList.add("hidden");
+          }
+        });
+      });
+    });
+  }
 });
