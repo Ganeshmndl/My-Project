@@ -23,8 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Apply theme as soon as the page loads
-  applyTheme();
+  applyTheme(); // Apply theme on initial load
 
   // --- 2. DESKTOP SIDEBAR HOVER EFFECT ---
   const sidebar = document.querySelector(".sidebar");
@@ -35,18 +34,47 @@ document.addEventListener("DOMContentLoaded", () => {
     body.classList.remove("sidebar-expanded")
   );
 
+  // --- 3. MOBILE MENU TOGGLE AND NAVIGATION ---
   // --- 3. MOBILE MENU TOGGLE ---
   const mobileMenuToggle = document.getElementById("mobileMenuToggle");
+  const menuOverlay = document.querySelector(".menu-overlay");
+
+  function openMenu() {
+    sidebar.classList.add("is-open");
+    body.classList.add("menu-is-open");
+  }
+
+  function closeMenu() {
+    sidebar.classList.remove("is-open");
+    body.classList.remove("menu-is-open");
+  }
+
   if (mobileMenuToggle) {
     mobileMenuToggle.addEventListener("click", () => {
-      sidebar.classList.toggle("is-open");
+      // If menu is already open, close it. Otherwise, open it.
+      if (sidebar.classList.contains("is-open")) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
     });
   }
 
-  // Close mobile menu when a link is clicked
+  // Close menu when the overlay is clicked
+  if (menuOverlay) {
+    menuOverlay.addEventListener("click", closeMenu);
+  }
+
+  // Close menu when a navigation link is clicked
   document.querySelectorAll(".sidebar-menu a").forEach((link) => {
-    link.addEventListener("click", () => {
-      sidebar.classList.remove("is-open");
+    link.addEventListener("click", function (e) {
+      e.preventDefault();
+      const targetId = this.getAttribute("href");
+      const targetSection = document.querySelector(targetId);
+      if (targetSection) {
+        targetSection.scrollIntoView({ behavior: "smooth" });
+      }
+      closeMenu(); // Use the closeMenu function
     });
   });
 
@@ -70,6 +98,18 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         });
       });
+    });
+  }
+
+  // --- 5. BACK TO TOP BUTTON ---
+  const backToTopButton = document.querySelector(".back-to-top");
+  if (backToTopButton) {
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 300) {
+        backToTopButton.classList.add("visible");
+      } else {
+        backToTopButton.classList.remove("visible");
+      }
     });
   }
 });
